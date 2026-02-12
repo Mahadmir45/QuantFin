@@ -10,20 +10,20 @@ import matplotlib.pyplot as plt
 import os
 from xgboost import XGBRegressor
 
-# Polygon (Massive) API key
+
 API_KEY = 'bhRlfQ4mbGkCYvG5NG9nsV0ABMaKnZWT'
 
-# Cache file
+
 CACHE_FILE = 'historical_prices.csv'
 
-# 25 Diversified stocks + SPY + VIX
+
 stocks = ['AAPL', 'MSFT', 'GOOG', 'AMZN', 'NVDA', 'META', 'TSLA', 'JPM', 'BAC', 'GS',
           'JNJ', 'PFE', 'LLY', 'XOM', 'CVX', 'PG', 'KO', 'PEP', 'MCD', 'SBUX',
           'BA', 'CAT', 'DUK', 'DD', 'WMT']
 all_tickers = stocks + ['SPY', 'VIX']
 
 
-# Smart incremental fetch with robust error handling
+
 def get_historical_prices(from_date='2022-01-01', to_date='today', force_refresh=False):
     if to_date == 'today':
         to_date = datetime.now().strftime('%Y-%m-%d')
@@ -82,13 +82,13 @@ def get_historical_prices(from_date='2022-01-01', to_date='today', force_refresh
     return prices
 
 
-# Compute returns from prices
+
 def prices_to_returns(prices):
     returns = prices.pct_change().dropna()
     return returns
 
 
-# Build graph
+
 def build_graph(returns_window):
     corr = returns_window.corr().abs().fillna(0)
     A = corr.values
@@ -97,13 +97,13 @@ def build_graph(returns_window):
     return L, corr.values
 
 
-# Laplacian diffusion
+
 def laplacian_diffusion(L, signal, t=0.5):
     diffused = expm(-t * L) @ signal
     return diffused
 
 
-# Enhanced Persistent Betti proxy with more lifetime stats
+
 def compute_ph_features(corr_matrices):
     features = []
     thresholds = np.linspace(0.1, 0.9, 7)
@@ -125,7 +125,7 @@ def compute_ph_features(corr_matrices):
     return np.array(features)
 
 
-# Backtesting (risk parity + more trades + consistent outperformance)
+
 def backtest(prices, window_size=90, tx_cost=0.0005, retrain_every=15):
     returns = prices_to_returns(prices)
     stock_returns = returns[stocks]
@@ -149,7 +149,7 @@ def backtest(prices, window_size=90, tx_cost=0.0005, retrain_every=15):
         vix_level = vix.iloc[i]
         mom = past_returns.mean().mean()
         global_features = np.hstack([eigenvalues, ph_features, vix_level, mom])
-        # Retrain walk-forward
+
         if model is None or (i - window_size) % retrain_every == 0:
             X_hist = []
             y_hist = []
@@ -169,12 +169,12 @@ def backtest(prices, window_size=90, tx_cost=0.0005, retrain_every=15):
                 model = XGBRegressor(n_estimators=150, objective='reg:squarederror', n_jobs=-1)
                 model.fit(X_hist, y_hist)
                 print(f"Retrained at day {i}")
-        # Risk parity weighting (inverse vol - standard risk parity for long-only)
+
         vol = past_returns.std().values + 1e-6
         risk_parity_weights = 1 / vol
         risk_parity_weights /= risk_parity_weights.sum()
-        # Active trading: always trade with minimum exposure
-        if vix_level > 35 and std_betti > 45:  # Extreme risk: flat
+
+        if vix_level > 35 and std_betti > 45:
             daily_ret = 0.0
         else:
             if model is not None:
@@ -182,7 +182,7 @@ def backtest(prices, window_size=90, tx_cost=0.0005, retrain_every=15):
                 pred_alpha = model.predict(features)[0]
             else:
                 pred_alpha = residuals
-            # More trades: select top 25 predicted alpha
+
             sorted_idx = np.argsort(pred_alpha)[-25:]
             weights = np.ones(25) / 25
             exposure = 1.2 if std_betti < 30 else 1.0 if std_betti < 40 else 0.6
@@ -211,7 +211,7 @@ def backtest(prices, window_size=90, tx_cost=0.0005, retrain_every=15):
     plt.show()
 
 
-# Main
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--backtest', action='store_true')
