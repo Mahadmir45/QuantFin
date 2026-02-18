@@ -2,7 +2,7 @@
 
 A comprehensive, production-ready quantitative finance library that unifies options pricing, portfolio optimization, algorithmic trading strategies, and risk analytics into a cohesive framework.
 
-## 🎯 Vision
+##  Vision
 
 Transform scattered quant scripts into a professional-grade library that demonstrates:
 - **Deep mathematical understanding** of financial models
@@ -10,7 +10,7 @@ Transform scattered quant scripts into a professional-grade library that demonst
 - **Practical trading applications** with realistic backtesting
 - **Research capabilities** for alpha generation
 
-## 📁 Architecture
+##  Architecture
 
 ```
 quantfin/
@@ -45,7 +45,7 @@ quantfin/
 └── tests/                  # Unit tests
 ```
 
-## 🚀 Key Features
+##  Key Features
 
 ### 1. Options Pricing Module
 - **Black-Scholes** with full Greeks
@@ -74,17 +74,17 @@ quantfin/
 - Slippage modeling
 - Performance analytics
 
-## 📊 Modules Overview
+##  Modules Overview
 
 | Module | Description | Status |
 |--------|-------------|--------|
-| `options` | Pricing models & Greeks | ✅ Enhanced |
-| `portfolio` | Optimization & risk | ✅ Enhanced |
-| `strategies` | Trading algorithms | ✅ Enhanced |
-| `backtesting` | Simulation engine | ✅ New |
-| `research` | Alpha research | ✅ New |
+| `options` | Pricing models & Greeks | Enhanced |
+| `portfolio` | Optimization & risk | Enhanced |
+| `strategies` | Trading algorithms | Enhanced |
+| `backtesting` | Simulation engine | New |
+| `research` | Alpha research | New |
 
-## 🛠️ Installation
+##  Installation
 
 ```bash
 # Clone repository
@@ -98,7 +98,7 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-## 📓 Jupyter Notebooks
+##  Jupyter Notebooks
 
 Interactive notebooks with visualizations:
 
@@ -112,7 +112,7 @@ Available notebooks:
 - `02_Portfolio_Optimization_Demo.ipynb` - Portfolio optimization and backtesting
 - `03_Topology_Alpha_Strategy.ipynb` - TDA-based strategy with visualizations
 
-## 🧪 Testing
+##  Testing
 
 Run the test suite:
 
@@ -139,7 +139,7 @@ Test coverage:
 - **Core utilities**: 95%+ coverage
 - **Strategies**: 85%+ coverage
 
-## 💻 Quick Start
+##  Quick Start
 
 ### Options Pricing
 ```python
@@ -187,7 +187,7 @@ engine = BacktestEngine(strategy, initial_capital=100000)
 results = engine.run(start_date='2020-01-01', end_date='2024-01-01')
 ```
 
-## 📈 Performance Examples
+## Performance Examples
 
 ### Topology Alpha Model
 - **Sharpe Ratio**: 1.45 (vs SPY: 0.92)
@@ -211,7 +211,7 @@ results = engine.run(start_date='2020-01-01', end_date='2024-01-01')
 - Information coefficient analysis
 - Turnover optimization
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 # Run all tests
@@ -224,21 +224,21 @@ pytest tests/test_options/
 pytest --cov=quantfin tests/
 ```
 
-## 📚 Documentation
+##  Documentation
 
 - [Options Pricing Guide](docs/options.md)
 - [Portfolio Optimization](docs/portfolio.md)
 - [Strategy Development](docs/strategies.md)
 - [API Reference](docs/api.md)
 
-## 🎓 Learning Path
+## Learning Path
 
 1. **Beginner**: Start with Black-Scholes and basic Greeks
 2. **Intermediate**: Explore portfolio optimization and backtesting
 3. **Advanced**: Implement custom strategies and ML models
 4. **Expert**: Contribute to TDA and stochastic volatility models
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions welcome! Areas for expansion:
 - Additional pricing models (Bates, Hull-White)
@@ -246,11 +246,11 @@ Contributions welcome! Areas for expansion:
 - Alternative data integration
 - GPU acceleration for Monte Carlo
 
-## 📄 License
+##  License
 
 MIT License - See [LICENSE](LICENSE) for details
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - Original Topology Alpha Model inspired by algebraic topology research
 - Black-Scholes implementation based on standard financial literature
