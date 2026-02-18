@@ -11,3 +11,4 @@ polygon
 massive
 xgboost
 tensorflow
+polygon-api-client
