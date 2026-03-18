@@ -1,0 +1,92 @@
+# ============================================================
+# MMM Bayesian — Retail Omnichannel Configuration
+# ============================================================
+# This config mirrors a typical Ekimetrics / Analytic Partners
+# engagement for an omnichannel retail brand with 6 media channels.
+
+target_col: revenue
+date_col: date
+target_transform: log       # log | none | sqrt
+
+channels:
+  - name: tv
+    adstock_type: geometric
+    adstock_max_lag: 8
+    adstock_alpha_prior: [3.0, 2.0]     # Beta(α,β) → mean ~0.6
+    saturation_type: hill
+    saturation_lambda_prior: [0.5, 1.0]
+    saturation_k_prior: [1.5, 1.0]
+    min_budget_pct: 0.05
+    max_budget_pct: 0.40
+
+  - name: digital_video
+    adstock_type: geometric
+    adstock_max_lag: 6
+    adstock_alpha_prior: [2.0, 2.5]
+    saturation_type: hill
+    saturation_lambda_prior: [0.4, 1.0]
+    saturation_k_prior: [2.0, 1.0]
+    min_budget_pct: 0.05
+    max_budget_pct: 0.30
+
+  - name: paid_search
+    adstock_type: geometric
+    adstock_max_lag: 3
+    adstock_alpha_prior: [1.5, 5.0]     # Short carry-over
+    saturation_type: hill
+    saturation_lambda_prior: [0.3, 1.0]
+    saturation_k_prior: [2.5, 1.0]
+    min_budget_pct: 0.05
+    max_budget_pct: 0.30
+
+  - name: paid_social
+    adstock_type: geometric
+    adstock_max_lag: 5
+    adstock_alpha_prior: [2.0, 3.0]
+    saturation_type: hill
+    saturation_lambda_prior: [0.35, 1.0]
+    saturation_k_prior: [2.0, 1.0]
+    min_budget_pct: 0.03
+    max_budget_pct: 0.25
+
+  - name: display
+    adstock_type: geometric
+    adstock_max_lag: 6
+    adstock_alpha_prior: [2.5, 2.0]
+    saturation_type: hill
+    saturation_lambda_prior: [0.45, 1.0]
+    saturation_k_prior: [1.5, 1.0]
+    min_budget_pct: 0.02
+    max_budget_pct: 0.20
+
+  - name: print
+    adstock_type: geometric
+    adstock_max_lag: 8
+    adstock_alpha_prior: [3.0, 2.0]     # Long carry-over for print
+    saturation_type: hill
+    saturation_lambda_prior: [0.5, 1.0]
+    saturation_k_prior: [1.2, 1.0]
+    min_budget_pct: 0.0
+    max_budget_pct: 0.15
+
+control_cols:
+  - competitor_price_index
+  - temperature
+
+seasonality:
+  yearly_order: 6
+  quarterly_order: 2
+  monthly_order: 0
+
+trend_type: linear
+
+intercept_prior: [0.0, 2.0]
+noise_prior: 1.0
+channel_coeff_prior: 0.5
+
+n_chains: 4
+n_draws: 2000
+n_tune: 1000
+target_accept: 0.9
+random_seed: 42
+holdout_pct: 0.15

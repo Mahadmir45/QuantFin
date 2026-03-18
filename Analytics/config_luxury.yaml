@@ -1,0 +1,92 @@
+# ============================================================
+# MMM Bayesian — Luxury Brand Configuration
+# ============================================================
+# Tailored for prestige / luxury brands with longer carry-over
+# effects, higher base revenue, and influencer-heavy media mix.
+
+target_col: revenue
+date_col: date
+target_transform: log
+
+channels:
+  - name: tv_prestige
+    adstock_type: geometric
+    adstock_max_lag: 10
+    adstock_alpha_prior: [3.5, 1.5]     # Strong carry-over for prestige TV
+    saturation_type: hill
+    saturation_lambda_prior: [0.6, 1.0]
+    saturation_k_prior: [1.2, 1.0]
+    min_budget_pct: 0.10
+    max_budget_pct: 0.45
+
+  - name: digital_video
+    adstock_type: geometric
+    adstock_max_lag: 6
+    adstock_alpha_prior: [2.0, 2.5]
+    saturation_type: hill
+    saturation_lambda_prior: [0.4, 1.0]
+    saturation_k_prior: [1.8, 1.0]
+    min_budget_pct: 0.05
+    max_budget_pct: 0.25
+
+  - name: influencer
+    adstock_type: delayed
+    adstock_max_lag: 8
+    adstock_alpha_prior: [2.0, 3.0]
+    saturation_type: hill
+    saturation_lambda_prior: [0.3, 1.0]
+    saturation_k_prior: [2.5, 1.0]
+    min_budget_pct: 0.05
+    max_budget_pct: 0.30
+
+  - name: paid_social
+    adstock_type: geometric
+    adstock_max_lag: 5
+    adstock_alpha_prior: [2.0, 3.0]
+    saturation_type: hill
+    saturation_lambda_prior: [0.35, 1.0]
+    saturation_k_prior: [2.0, 1.0]
+    min_budget_pct: 0.03
+    max_budget_pct: 0.20
+
+  - name: ooh_premium
+    adstock_type: geometric
+    adstock_max_lag: 10
+    adstock_alpha_prior: [3.0, 2.0]     # Long recall for OOH
+    saturation_type: hill
+    saturation_lambda_prior: [0.5, 1.0]
+    saturation_k_prior: [1.5, 1.0]
+    min_budget_pct: 0.03
+    max_budget_pct: 0.25
+
+  - name: print_magazine
+    adstock_type: geometric
+    adstock_max_lag: 12
+    adstock_alpha_prior: [4.0, 2.0]     # Very long for luxury print
+    saturation_type: hill
+    saturation_lambda_prior: [0.55, 1.0]
+    saturation_k_prior: [1.0, 1.0]
+    min_budget_pct: 0.0
+    max_budget_pct: 0.15
+
+control_cols:
+  - competitor_price_index
+  - temperature
+
+seasonality:
+  yearly_order: 6
+  quarterly_order: 2
+  monthly_order: 0
+
+trend_type: linear
+
+intercept_prior: [0.0, 2.0]
+noise_prior: 1.0
+channel_coeff_prior: 0.5
+
+n_chains: 4
+n_draws: 2000
+n_tune: 1000
+target_accept: 0.9
+random_seed: 42
+holdout_pct: 0.15
